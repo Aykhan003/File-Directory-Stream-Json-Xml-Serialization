@@ -2,8 +2,8 @@
 using System.Text.Json;
 
 string directory = "C:\\Users\\User\\source\\repos\\ConsoleApp44\\ConsoleApp44\\";
-string path = Path.Combine(directory, "data");
-string filePath = Path.Combine(path, "data.json");
+string path = Path.Combine(directory, "aykhan");
+string filePath = Path.Combine(path, "task.json");
 if (!Directory.Exists(path))
 {
     Directory.CreateDirectory(path);
@@ -75,15 +75,7 @@ void GetEmployeeById(string filePath)
         return;
     }
     Department department1 = JsonSerializer.Deserialize<Department>(json);
-    var employee = department1.Employees.Find(e => e.Id == id);
-    if (employee != null)
-    {
-        employee.ShowInfo();
-    }
-    else
-    {
-        Console.WriteLine($"Employee with Id {id} not found.");
-    }
+    department1.GetEmployeesById(id);
 }
 void RemoveEmployeeById()
 {
@@ -96,16 +88,8 @@ void RemoveEmployeeById()
         return;
     }
     Department department1 = JsonSerializer.Deserialize<Department>(json);
-    var employee = department1.Employees.Find(e => e.Id == id);
-    if (employee != null)
-    {
-        department1.Employees.Remove(employee);
-        string updatedJson = JsonSerializer.Serialize(department1);
-        File.WriteAllText(filePath, updatedJson);
-        Console.WriteLine("Employee removed successfully.");
-    }
-    else
-    {
-        Console.WriteLine($"Employee with Id {id} not found.");
-    }
+    department1.RemoveEmployeeById(id);
+    string updatedJson = JsonSerializer.Serialize(department1);
+    File.WriteAllText(filePath, updatedJson);
+    Console.WriteLine("Employee removed successfully.");
 }
